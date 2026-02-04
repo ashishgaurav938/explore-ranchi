@@ -1,7 +1,6 @@
 # Use Java 17
 FROM eclipse-temurin:17-jdk-alpine
 
-# App directory
 WORKDIR /app
 
 # Copy Maven wrapper and pom
@@ -18,6 +17,8 @@ COPY src src
 # Build app
 RUN ./mvnw package -DskipTests
 
-# Run app
+# Copy jar with fixed name
+RUN cp target/*.jar app.jar
+
 EXPOSE 8080
-CMD ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "app.jar"]
