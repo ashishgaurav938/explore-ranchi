@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head :: head}"></div>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main style="max-width: 1100px; margin: 40px auto; padding: 0 20px;">
+
+  <h2>🛠 Community Place Suggestions</h2>
+
+  <!-- PENDING -->
+  <h3>⏳ Pending</h3>
+  <div th:each="s : ${pending}" class="admin-card">
+    <h4 th:text="${s.placeName}"></h4>
+    <p th:text="${s.description}"></p>
+    <small>
+      Suggested by <b th:text="${s.name ?: 'Anonymous'}"></b>
+    </small>
+
+    <div class="actions">
+      <form th:action="@{/admin/suggestions/{id}/approve(id=${s.id})}" method="post">
+        <button class="approve">Approve ⭐</button>
+      </form>
+
+      <form th:action="@{/admin/suggestions/{id}/reject(id=${s.id})}" method="post">
+        <button class="reject">Reject</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPROVED -->
+  <h3>✅ Approved</h3>
+  <ul>
+    <li th:each="s : ${approved}">
+      ⭐ <span th:text="${s.placeName}"></span> (Community Pick)
+    </li>
+  </ul>
+
+  <!-- REJECTED -->
+  <h3>❌ Rejected</h3>
+  <ul>
+    <li th:each="s : ${rejected}" th:text="${s.placeName}"></li>
+  </ul>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/head :: head"></div>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<!-- HERO SECTION -->
+<!--<section class="hero">-->
+<!--  <div class="hero-overlay"></div>-->
+
+<!--  <div class="hero-content">-->
+<!--    <h1>Explore <span th:text="${city}"></span></h1>-->
+<!--    <p>The City of Waterfalls, Hills & Tribal Culture</p>-->
+
+<!--    <div class="hero-buttons">-->
+<!--      <a href="/attractions" class="btn-primary">Explore Attractions</a>-->
+<!--      <a href="/attractions?category=waterfall" class="btn-secondary">-->
+<!--        Discover Waterfalls-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; FEATURED ATTRACTIONS &ndash;&gt;-->
+<!--<section class="featured container">-->
+<!--  <h2 class="section-title">Top Places to Visit</h2>-->
+
+<!--  <div class="card-grid">-->
+<!--    <div class="card" th:each="attr : ${featuredAttractions}">-->
+<!--      <img th:src="${attr.coverImage}" th:alt="${attr.name}">-->
+<!--      <div class="card-body">-->
+<!--        <h3 th:text="${attr.name}"></h3>-->
+<!--        <p th:text="${attr.description}"></p>-->
+<!--        <a th:href="@{/attractions/{id}(id=${attr.id})}"-->
+<!--           class="card-link">View Details →</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="text-center">-->
+<!--    <a href="/attractions" class="btn-primary mt-3">View All Attractions</a>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>Explore the Heart of Jharkhand</h1>
+      <p>The City of Waterfalls, Hills & Tribal Culture</p>
+
+      <form action="/attractions" method="get" class="hero-search">
+        <input type="text"
+               name="keyword"
+               placeholder="Search waterfalls, hills, temples…">
+        <button type="submit">Search</button>
+      </form>
+
+      <div class="hero-actions">
+        <a href="#top-places" class="hero-btn primary">Top Attractions</a>
+        <a href="#categories" class="hero-btn secondary">Explore Places</a>
+      </div>
+    </div>
+  </section>
+
+<main>
+
+  <!-- TOP ATTRACTIONS -->
+  <section class="featured container" id="top-places">
+    <h2 class="section-title">Top Places to Visit</h2>
+
+    <div class="card-grid">
+      <div class="card"
+           th:each="a, stat : ${topPlaces}">
+
+        <div class="visit-badge"
+             th:if="${stat.index < 3}">
+          Most Visited
+        </div>
+        <img th:src="${a.coverImage}" th:alt="${a.name}">
+        <div class="card-body">
+          <h3 th:text="${a.name}"></h3>
+          <p th:text="${a.description}"></p>
+          <a th:href="@{/attractions/{slug}(slug=${a.slug})}">
+            Explore →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CATEGORIES -->
+  <section class="categories container" id="categories">
+    <h2 class="section-title">Explore Your Way</h2>
+
+    <div class="category-grid">
+      <a href="/attractions?category=Waterfall" class="category-card">
+        <img src="/images/waterfall.jpg" alt="Waterfalls">
+        <span>Waterfalls</span>
+      </a>
+
+      <a href="/attractions?category=Garden" class="category-card">
+        <img src="/images/garden.jpg" alt="Gardens">
+        <span>Parks & Gardens</span>
+      </a>
+
+      <a href="/attractions?category=Temple" class="category-card">
+        <img src="/images/temple.jpg" alt="Temples">
+        <span>Temples</span>
+      </a>
+
+      <a href="/attractions?category=view" class="category-card">
+        <img src="/images/nature.jpg" alt="Views">
+        <span>Views</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- OUR MISSION -->
+  <!-- OUR MISSION -->
+  <section class="mission-section">
+    <div class="mission-container">
+      <!--    <span class="mission-tag">Our Purpose</span>-->
+      <!--    <h2>Our Mission</h2>-->
+      <span class="mission-tag">Our Mission</span>
+
+      <p>
+        Explore Ranchi is built with a simple goal — to make Ranchi and Jharkhand
+        known across India. This land is home to breathtaking waterfalls,
+        peaceful hills, ancient temples, and rich tribal culture, yet much of
+        its beauty remains unexplored.
+      </p>
+
+      <p>
+        By bringing all these amazing places together on one platform,
+        we want people to truly see how beautiful Ranchi is and inspire
+        them to visit, explore, and experience it themselves.
+      </p>
+    </div>
+  </section>
+
+<!--  <section class="things-to-do">-->
+<!--    <h2>Things to Do in Ranchi</h2>-->
+
+<!--    <div class="card-grid">-->
+
+<!--      <a href="/things-to-do/waterfalls" class="todo-card">-->
+<!--        <div class="icon">🌄</div>-->
+<!--        <h3>Waterfall Hopping</h3>-->
+<!--        <p>Explore famous waterfalls like Hundru, Dassam, Jonha.</p>-->
+<!--      </a>-->
+
+<!--      <a href="/things-to-do/spiritual" class="todo-card">-->
+<!--        <div class="icon">🛕</div>-->
+<!--        <h3>Spiritual Trail</h3>-->
+<!--        <p>Visit sacred temples such as Rajrappa and Jagannath Temple.</p>-->
+<!--      </a>-->
+
+<!--      <a href="/things-to-do/nature" class="todo-card">-->
+<!--        <div class="icon">🌿</div>-->
+<!--        <h3>Nature & Scenic Views</h3>-->
+<!--        <p>Relax among hills, forests, lakes and viewpoints.</p>-->
+<!--      </a>-->
+
+<!--      <a href="/things-to-do/photography" class="todo-card">-->
+<!--        <div class="icon">📸</div>-->
+<!--        <h3>Photography Spots</h3>-->
+<!--        <p>Capture stunning photos at scenic locations.</p>-->
+<!--      </a>-->
+
+<!--    </div>-->
+
+<!--  </section>-->
+
+
+
+</main>
+
+
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script>
+  const heroTitle = document.querySelector('.hero h1');
+
+  window.addEventListener('scroll', () => {
+    // Parallax effect
+    heroTitle.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+
+    // Optional: fade out when scrolling past 120px
+    if (window.scrollY > 120) {
+      heroTitle.style.opacity = '0';
+    } else {
+      heroTitle.style.opacity = '1';
+    }
+  });
+</script>
+
+
+
+
+</body>
+</html>

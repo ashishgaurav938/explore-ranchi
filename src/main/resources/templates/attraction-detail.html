@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${attraction.name}">Attraction</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+    }
+
+    /* Hero */
+    .detail-hero img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .detail-content {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    #lightbox .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Fun fact */
+    .fun-fact {
+      background: #fff8e1;
+      padding: 15px;
+      border-left: 5px solid #ffc107;
+      margin: 20px 0;
+    }
+
+    /* Map */
+    .map-container iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 10px;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #1976d2;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body><div th:replace="fragments/head :: head"></div>
+
+<body>
+
+<!-- Header fragment -->
+<div th:replace="fragments/header :: header"></div>
+
+<main class="detail-page">
+
+  <!-- Hero Image -->
+  <div class="detail-hero">
+    <img th:src="@{${attraction.coverImage}}" alt="Cover Image">
+  </div>
+
+  <div class="detail-content">
+
+    <h2 th:text="${attraction.name}"></h2>
+
+    <p th:text="${attraction.description}"></p>
+
+    <!-- Image Gallery -->
+    <section class="gallery" th:if="${attraction.images}">
+      <img th:each="img, iter : ${attraction.images}"
+           th:src="@{${img}}"
+           th:data-index="${iter.index}"
+           onclick="openLightbox(this)">
+    </section>
+
+    <!-- Did you know -->
+    <section class="fun-fact" th:if="${attraction.funFact}">
+      <h3>💡 Did you know?</h3>
+      <p th:text="${attraction.funFact}"></p>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section">
+      <h3>📍 Location</h3>
+      <div class="map-container">
+        <iframe th:src="@{${attraction.mapUrl}}"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </section>
+
+<!--    <a class="back-link" href="/attractions">← Back to Attractions</a>-->
+
+  </div>
+
+</main>
+
+<!-- Lightbox -->
+<!-- Lightbox -->
+<div id="lightbox">
+  <span class="close" onclick="closeLightbox()">×</span>
+  <span class="nav prev" onclick="changeImage(-1)">❮</span>
+  <img id="lightbox-img">
+  <span class="nav next" onclick="changeImage(1)">❯</span>
+</div>
+
+
+<!-- JavaScript -->
+<script>
+  let currentIndex = 0;
+  let images = [];
+
+  function openLightbox(element) {
+    images = document.querySelectorAll(".gallery img");
+    currentIndex = parseInt(element.dataset.index);
+
+    const lightbox = document.getElementById("lightbox");
+    const img = document.getElementById("lightbox-img");
+
+    img.src = element.src;
+    lightbox.style.display = "flex";
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
+
+  function changeImage(step) {
+    currentIndex += step;
+
+    if (currentIndex < 0) {
+      currentIndex = images.length - 1;
+    }
+    if (currentIndex >= images.length) {
+      currentIndex = 0;
+    }
+
+    document.getElementById("lightbox-img").src =
+            images[currentIndex].src;
+  }
+</script>
+
+
+</body>
+</html>

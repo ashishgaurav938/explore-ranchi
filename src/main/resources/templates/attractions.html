@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Attractions</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<div th:replace="fragments/head :: head"></div>
+
+<body>
+
+<!--<form class="filter-bar" method="get" action="/attractions">-->
+
+<!--  &lt;!&ndash; Search &ndash;&gt;-->
+<!--  <input type="text"-->
+<!--         name="keyword"-->
+<!--         placeholder="Search attractions..."-->
+<!--         th:value="${keyword}">-->
+
+<!--  &lt;!&ndash; Category Filter &ndash;&gt;-->
+<!--  <select name="category">-->
+<!--    <option value="">All Categories</option>-->
+<!--    <option value="Waterfall" th:selected="${category == 'Waterfall'}">Waterfall</option>-->
+<!--    <option value="Garden" th:selected="${category == 'Garden'}">Garden</option>-->
+<!--    <option value="Park" th:selected="${category == 'Park'}">Park</option>-->
+<!--    <option value="Religious" th:selected="${category == 'Religious'}">Religious</option>-->
+<!--  </select>-->
+
+<!--  <button type="submit">Search</button>-->
+<!--</form>-->
+
+
+<!-- Header Fragment -->
+<div th:replace="fragments/header :: header"></div>
+
+<main>
+
+<!--  <h2>Top Attractions in Ranchi</h2>-->
+  <h2 class="section-title" th:text="${pageTitle}"></h2>
+
+  <div class="attractions-grid">
+<!--    <a class="attraction-card"-->
+<!--       th:href="@{/attractions/{id}(id=${attr.id})}"-->
+<!--       th:each="attr : ${attractions}">-->
+
+      <a class="attraction-card"
+         th:href="@{/attractions/{slug}(slug=${attr.slug})}"
+         th:each="attr : ${attractions}">
+
+
+
+      <img th:src="${attr.coverImage}" alt="Attraction image">
+
+      <div class="card-content">
+        <h3 th:text="${attr.name}"></h3>
+        <p th:text="${attr.description}"></p>
+      </div>
+
+    </a>
+  </div>
+
+
+  <div class="pagination" th:if="${totalPages > 1}">
+
+    <!-- Previous -->
+    <a th:if="${currentPage > 0}"
+       th:href="@{/attractions(page=${currentPage - 1}, keyword=${keyword}, category=${category})}">
+      ◀ Prev
+    </a>
+
+    <!-- Page numbers -->
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+    <a th:href="@{/attractions(page=${i}, keyword=${keyword}, category=${category})}"
+       th:text="${i + 1}"
+       th:classappend="${i == currentPage} ? 'active' : ''">
+    </a>
+  </span>
+
+    <!-- Next -->
+    <a th:if="${currentPage < totalPages - 1}"
+       th:href="@{/attractions(page=${currentPage + 1}, keyword=${keyword}, category=${category})}">
+      Next ▶
+    </a>
+
+  </div>
+
+
+</main>
+
+<!-- Footer Fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

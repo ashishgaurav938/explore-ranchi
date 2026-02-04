@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="fragments/head :: head"></div>
+
+<body>
+
+<!-- Minimal Admin Header -->
+<header class="admin-header">
+    <div class="admin-header-inner">
+        <h1>Explore Ranchi · Admin</h1>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<main class="admin-dashboard">
+
+    <!-- Stats Cards -->
+    <section class="stats">
+        <div class="stat-card">
+            <h3>Total Suggestions</h3>
+            <p th:text="${totalCount}">0</p>
+        </div>
+
+        <div class="stat-card pending">
+            <h3>Pending Review</h3>
+            <p th:text="${pendingCount}">0</p>
+        </div>
+
+        <div class="stat-card approved">
+            <h3>Approved</h3>
+            <p th:text="${approvedCount}">0</p>
+        </div>
+
+        <div class="stat-card rejected">
+            <h3>Rejected</h3>
+            <p th:text="${rejectedCount}">0</p>
+        </div>
+    </section>
+
+    <!-- Suggestions Table -->
+    <section class="table-section">
+        <h2>📬 Community Suggestions</h2>
+
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Suggestion</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="s : ${suggestions}">
+                <td th:text="${s.name}">Ashish</td>
+                <td th:text="${s.email}">email@test.com</td>
+                <td th:text="${s.description}">Waterfall near village…</td>
+
+
+                <td>
+          <span th:text="${s.status}"
+                th:class="'status ' + ${s.status.toLowerCase()}">
+            PENDING
+          </span>
+                </td>
+
+                <td class="actions">
+                    <form th:action="@{/admin/suggestions/approve/{id}(id=${s.id})}" method="post">
+                        <button class="approve-btn">Approve ⭐</button>
+                    </form>
+
+                    <form th:action="@{/admin/suggestions/reject/{id}(id=${s.id})}" method="post">
+                        <button class="reject-btn">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+</body>
+</html>
