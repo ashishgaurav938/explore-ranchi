@@ -8,15 +8,9 @@
     </url>
 
     <url>
-        <loc>https://explore-ranchi.onrender.com/places-to-visit-in-ranchi</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://explore-ranchi.onrender.com/contact</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <priority>0.8</priority>
     </url>
 
 </urlset>

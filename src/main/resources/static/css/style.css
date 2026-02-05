@@ -1008,6 +1008,17 @@ header h1 a.logo-link:active {
     border-radius: 2px;
 }
 
+/*seo*/
+.seo-content {
+    max-width: 900px;
+    line-height: 1.7;
+    color: #444;
+}
+
+.seo-content h2 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
 
 
 
